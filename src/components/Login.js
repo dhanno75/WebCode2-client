@@ -33,8 +33,9 @@ function Login() {
     validate,
     onSubmit: (values) => {
       setStatus("🔃 Loading...");
-      fetch("http://localhost:4000/users/login", {
+      fetch("https://web-code2-server.vercel.app/users/login", {
         method: "POST",
+        mode: "no-cors",
         body: JSON.stringify(values),
         headers: {
           "Content-Type": "application/json",
@@ -87,12 +88,14 @@ function Login() {
           />
           {errors.password ? <div>{errors.password}</div> : null}
         </Form.Group>
-        <Link to="/forgotPassword" style={{ display: "block" }}>
-          Forgot your password
-        </Link>
-        <Button variant="primary" type="submit">
-          {status}
-        </Button>
+        <div className="login-btn">
+          <Button variant="primary" type="submit" className="mt-1">
+            {status}
+          </Button>
+          <Link to="/forgotPassword" className="link">
+            Forgot your password?
+          </Link>
+        </div>
       </Form>
     </Container>
   );

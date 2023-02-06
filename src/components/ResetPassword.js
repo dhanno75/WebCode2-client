@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const validate = (values) => {
@@ -22,14 +22,18 @@ function ResetPassword() {
   const navigate = useNavigate();
   const [status, setStatus] = useState("Submit");
 
+  // const resetPasswordLink =
+  const { token } = useParams();
+
   const { values, handleChange, handleSubmit, errors } = useFormik({
     initialValues: {
-      email: "",
+      password: "",
     },
     validate,
     onSubmit: (values) => {
+      console.log(token);
       setStatus("🔃 Loading...");
-      fetch("http://localhost:4000/users/resetPassword/:token", {
+      fetch(`http://localhost:4000/users/resetPassword/:${token}`, {
         method: "PUT",
         body: JSON.stringify(values),
         headers: {
@@ -41,9 +45,13 @@ function ResetPassword() {
             throw new Error(data.statusText);
           }
           setStatus("✅ Success");
-          navigate("/login");
-          toast.success("Password was updated successfully!");
+
           return data.json();
+        })
+        .then((data) => {
+          localStorage.setItem("token", data.token);
+          navigate("/");
+          toast.success("Password was updated successfully!");
         })
         .catch((err) => {
           toast.warn("Something went wrong. Please try after sometime.");
@@ -55,19 +63,20 @@ function ResetPassword() {
     <Container style={{ maxWidth: "500px" }}>
       <Form className="mt-5" onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Your password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Enter your new password"
             name="password"
             value={values.password}
             onChange={handleChange}
+            minLength={6}
           />
           {errors.password ? <div>{errors.password}</div> : null}
         </Form.Group>
 
         <Button variant="primary" type="submit">
-          Submit
+          Reset password
         </Button>
       </Form>
     </Container>

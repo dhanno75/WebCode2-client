@@ -1,0 +1,14 @@
+.login-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link {
+  text-decoration: none;
+  align-self: center;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: rgb(243, 162, 12);
+}
