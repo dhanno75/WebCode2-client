@@ -3,61 +3,48 @@ import { Button, Container, Form } from "react-bootstrap";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { API } from "../globals";
+import { resetYourPassword } from "../schemas";
 
-const validate = (values) => {
-  const errors = {};
-
-  if (!values.password) {
-    errors.password = "Required";
-  } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.password)
-  ) {
-    errors.password = "Invalid password";
-  }
-
-  return errors;
+const initialValues = {
+  password: "",
 };
 
 function ResetPassword() {
   const navigate = useNavigate();
-  const [status, setStatus] = useState("Submit");
 
   // const resetPasswordLink =
   const { token } = useParams();
 
-  const { values, handleChange, handleSubmit, errors } = useFormik({
-    initialValues: {
-      password: "",
-    },
-    validate,
-    onSubmit: (values) => {
-      console.log(token);
-      setStatus("🔃 Loading...");
-      fetch(`http://localhost:4000/users/resetPassword/:${token}`, {
-        method: "PUT",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((data) => {
-          if (data.status === 401) {
-            throw new Error(data.statusText);
-          }
-          setStatus("✅ Success");
-
-          return data.json();
+  const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
+    useFormik({
+      initialValues,
+      validationSchema: resetYourPassword,
+      onSubmit: (values) => {
+        fetch(`${API}/users/resetPassword/${token}`, {
+          method: "PUT",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .then((data) => {
-          localStorage.setItem("token", data.token);
-          navigate("/");
-          toast.success("Password was updated successfully!");
-        })
-        .catch((err) => {
-          toast.warn("Something went wrong. Please try after sometime.");
-        });
-    },
-  });
+          .then((data) => {
+            console.log(data);
+            if (data.status === 400) {
+              throw new Error(data.statusText);
+            }
+            return data.json();
+          })
+          .then((data) => {
+            localStorage.setItem("token", data.token);
+            navigate("/");
+            toast.success("Password was updated successfully!");
+          })
+          .catch((err) => {
+            toast.warn("Token is invalid or expired");
+          });
+      },
+    });
 
   return (
     <Container style={{ maxWidth: "500px" }}>
@@ -70,9 +57,10 @@ function ResetPassword() {
             name="password"
             value={values.password}
             onChange={handleChange}
+            onBlur={handleBlur}
             minLength={6}
           />
-          {errors.password ? <div>{errors.password}</div> : null}
+          {errors.password && touched ? <div>{errors.password}</div> : null}
         </Form.Group>
 
         <Button variant="primary" type="submit">
