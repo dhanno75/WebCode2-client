@@ -13,6 +13,34 @@ export const forgotPassword = createAsyncThunk("users/getUsers", async () => {
   return fetch(`${API}/users`).then((res) => res.json());
 });
 
+export const login = createAsyncThunk(
+  "users/login",
+  async (values, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await fetch(`${API}/users/login`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      let data = await response.json();
+      console.log(data);
+      if (response.status === 200) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("isLoggedIn", true);
+        return data;
+      } else {
+        rejectWithValue(data);
+      }
+    } catch (err) {
+      rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const createUser = createAsyncThunk(
   "users/signup",
   async ({ values }) => {
@@ -36,9 +64,20 @@ export const createUser = createAsyncThunk(
 const UserSlice = createSlice({
   name: "users",
   initialState: {
-    loading: false,
     users: [],
-    error: null,
+    email: "",
+    firstname: "",
+    role: "",
+    isFetching: false,
+    isSuccess: false,
+    isError: false,
+  },
+  reducers: {
+    clearSomeState: (state) => {
+      state.isError = false;
+      state.isSuccess = false;
+      state.isFetching = false;
+    },
   },
   extraReducers: {
     [getAllUsers.pending]: (state, action) => {
@@ -52,7 +91,24 @@ const UserSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    [login.pending]: (state) => {
+      state.isFetching = true;
+    },
+    [login.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+      state.email = payload.user.email;
+      state.firstname = payload.user.firstname;
+      state.role = payload.user.role;
+      state.isFetching = false;
+      state.isSuccess = true;
+      return state;
+    },
+    [login.rejected]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isError = true;
+    },
   },
 });
 
+export const { clearSomeState } = UserSlice.actions;
 export default UserSlice.reducer;

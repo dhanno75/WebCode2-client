@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Navbar,
   Nav,
@@ -7,11 +7,20 @@ import {
   NavDropdown,
   Form,
 } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 function Navigation() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const { role } = useSelector((state) => state.user);
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div>
@@ -25,7 +34,12 @@ function Navigation() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              <Button onClick={() => navigate("/Login")}>Login</Button>
+              {token && (role === "admin" || role === "manager") ? (
+                <Button onClick={() => navigate("/Signup")}>Signup</Button>
+              ) : (
+                <Button onClick={() => navigate("/Login")}>Login</Button>
+              )}
+
               <Nav.Link href="#action2">Link</Nav.Link>
               <NavDropdown title="Link" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#action3">Action</NavDropdown.Item>

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { useNavigate, Link } from "react-router-dom";
-import { API } from "../globals";
+// import { API } from "../globals";
 import { loginSchema } from "../schemas";
+import { useDispatch, useSelector } from "react-redux";
+import { login, clearSomeState } from "../redux/features/UserSlice";
 
 const initialValues = {
   email: "",
@@ -12,6 +14,8 @@ const initialValues = {
 };
 
 function Login() {
+  const dispatch = useDispatch();
+  const { isSuccess, isError } = useSelector((state) => ({ ...state.user }));
   const navigate = useNavigate();
 
   const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
@@ -19,29 +23,27 @@ function Login() {
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values) => {
-        fetch(`${API}/users/login`, {
-          method: "POST",
-          body: JSON.stringify(values),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((data) => {
-            if (data.status === 401) {
-              throw new Error(data.statusText);
-            }
-            toast.success("Login successfull");
-            return data.json();
-          })
-          .then((data) => {
-            localStorage.setItem("token", data.token);
-            navigate("/");
-          })
-          .catch((err) => {
-            toast.error("Invalid login credentials");
-          });
+        dispatch(login(values));
       },
     });
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearSomeState());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      toast.warn("Invalid login credentials.");
+      dispatch(clearSomeState());
+    }
+    if (isSuccess) {
+      toast.success("Successful Login!");
+      dispatch(clearSomeState());
+      navigate("/");
+    }
+  }, [isError, isSuccess]);
 
   return (
     <Container style={{ maxWidth: "500px" }}>
@@ -86,3 +88,25 @@ function Login() {
 }
 
 export default Login;
+
+// fetch(`${API}/users/login`, {
+//   method: "POST",
+//   body: JSON.stringify(values),
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+// })
+//   .then((data) => {
+//     if (data.status === 401) {
+//       throw new Error(data.statusText);
+//     }
+//     toast.success("Login successfull");
+//     return data.json();
+//   })
+//   .then((data) => {
+//     localStorage.setItem("token", data.token);
+//     navigate("/");
+//   })
+//   .catch((err) => {
+//     toast.error("Invalid login credentials");
+//   });

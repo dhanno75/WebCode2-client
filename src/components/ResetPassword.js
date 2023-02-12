@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
@@ -29,7 +29,6 @@ function ResetPassword() {
           },
         })
           .then((data) => {
-            console.log(data);
             if (data.status === 400) {
               throw new Error(data.statusText);
             }

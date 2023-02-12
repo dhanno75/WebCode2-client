@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useFormik } from "formik";
 import { useNavigate, Link } from "react-router-dom";
@@ -15,21 +15,26 @@ const initialValues = {
 
 function Signup() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
-      onSubmit: (values, action) => {
+      onSubmit: (vals = { ...values, token }, action) => {
+        console.log(vals);
         fetch(`${API}/users/signup`, {
           method: "POST",
-          body: JSON.stringify(values),
+          body: JSON.stringify(vals),
           headers: {
+            Accept: "application/json",
             "Content-Type": "application/json",
           },
         })
           .then((data) => {
-            if (data.status === 401) {
+            console.log(data);
+            if (data.status === 400) {
               throw new Error(data.statusText);
             }
             action.resetForm();
