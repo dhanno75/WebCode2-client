@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { useNavigate, Link } from "react-router-dom";
@@ -31,7 +31,7 @@ function Login() {
     return () => {
       dispatch(clearSomeState());
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (isError) {
@@ -43,7 +43,7 @@ function Login() {
       dispatch(clearSomeState());
       navigate("/userDetails");
     }
-  }, [isError, isSuccess]);
+  }, [dispatch]);
 
   return (
     <Container style={{ maxWidth: "500px" }}>

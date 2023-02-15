@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Button,
-  NavDropdown,
-  Form,
-} from "react-bootstrap";
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { Link } from "react-router-dom";
@@ -62,15 +55,13 @@ function Navigation() {
             </Nav>
 
             <div className="d-flex">
-              {/* <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              /> */}
-              <Link to="/userDetails" className="nav-link">
-                Users
-              </Link>
+              {token && role === "admin" ? (
+                <Link to="/userDetails" className="nav-link">
+                  Users
+                </Link>
+              ) : (
+                ""
+              )}
               {token && role ? (
                 <Button variant="outline-danger" onClick={handleLogout}>
                   Logout
