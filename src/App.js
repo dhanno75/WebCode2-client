@@ -17,27 +17,27 @@ import Leads from "./components/Leads";
 function App() {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate("/home");
-  //   } else {
-  //     navigate("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/userDetails");
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="App">
-      {/* <Navigation /> */}
+      <Navigation />
       <ToastContainer />
       <Routes>
-        <Route
+        {/* <Route
           path="/navigation"
           element={
             <ProtectedRoute>
               <Navigation />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />

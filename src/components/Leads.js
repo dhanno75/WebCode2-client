@@ -13,7 +13,7 @@ function Leads() {
 
   return (
     <div className="wrapper">
-      <h2>All Leads</h2>
+      <h2 className="mb-4">All Leads</h2>
       {leads.leads ? (
         leads.leads.map((lead, index) => {
           return (

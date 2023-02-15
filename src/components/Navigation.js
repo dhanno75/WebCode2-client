@@ -7,26 +7,36 @@ import {
   NavDropdown,
   Form,
 } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { Link } from "react-router-dom";
 
 function Navigation() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const { role } = useSelector((state) => state.user);
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate("/");
-  //   }
-  // }, []);
+  const role = localStorage.getItem("role");
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/userDetails");
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("role");
+    toast.warn("Logged out successfully!");
+    navigate("/");
+  };
 
   return (
     <div>
       <Navbar bg="light" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="/">CRM</Navbar.Brand>
+          <Link to="/" className="navbar-brand">
+            CRM
+          </Link>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -35,35 +45,40 @@ function Navigation() {
               navbarScroll
             >
               {token && (role === "admin" || role === "manager") ? (
-                <Button onClick={() => navigate("/Signup")}>Create User</Button>
+                <Link to="/signup" className="nav-link">
+                  Add User
+                </Link>
               ) : (
                 ""
               )}
 
-              <Nav.Link href="#action2">Link</Nav.Link>
-              <NavDropdown title="Link" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action5">
-                  Something else here
-                </NavDropdown.Item>
-              </NavDropdown>
-              <Nav.Link href="#" disabled>
-                Link
-              </Nav.Link>
+              {token && (role === "admin" || role === "manager") ? (
+                <Link to="/leads" className="nav-link">
+                  All Leads
+                </Link>
+              ) : (
+                ""
+              )}
             </Nav>
-            <Form className="d-flex">
-              <Form.Control
+
+            <div className="d-flex">
+              {/* <Form.Control
                 type="search"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
-              />
-              <Button variant="outline-success">Search</Button>
-            </Form>
+              /> */}
+              <Link to="/userDetails" className="nav-link">
+                Users
+              </Link>
+              {token && role ? (
+                <Button variant="outline-danger" onClick={handleLogout}>
+                  Logout
+                </Button>
+              ) : (
+                <div style={{ fontSize: "24px" }}>😃</div>
+              )}
+            </div>
           </Navbar.Collapse>
         </Container>
       </Navbar>

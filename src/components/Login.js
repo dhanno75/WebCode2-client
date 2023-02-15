@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, clearSomeState } from "../redux/features/UserSlice";
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: "admin@company.io",
+  password: "test@1234",
 };
 
 function Login() {
@@ -41,7 +41,7 @@ function Login() {
     if (isSuccess) {
       toast.success("Successful Login!");
       dispatch(clearSomeState());
-      navigate("/navigation");
+      navigate("/userDetails");
     }
   }, [isError, isSuccess]);
 
