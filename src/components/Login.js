@@ -41,16 +41,17 @@ function Login() {
     if (isSuccess) {
       toast.success("Successful Login!");
       dispatch(clearSomeState());
-      navigate("/");
+      navigate("/navigation");
     }
   }, [isError, isSuccess]);
 
   return (
     <Container style={{ maxWidth: "500px" }}>
-      <Form className="mt-5" onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
+      <div className="log-form">
+        <h2>Login to your account</h2>
+
+        <form onSubmit={handleSubmit}>
+          <input
             type="email"
             placeholder="Enter email"
             name="email"
@@ -58,12 +59,9 @@ function Login() {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors.email && touched ? <div>{errors.email}</div> : null}
-        </Form.Group>
+          {errors.email && touched ? <p>{errors.email}</p> : null}
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+          <input
             type="password"
             placeholder="Password"
             name="password"
@@ -72,17 +70,18 @@ function Login() {
             onBlur={handleBlur}
             minLength={6}
           />
-          {errors.password && touched ? <div>{errors.password}</div> : null}
-        </Form.Group>
-        <div className="login-btn">
-          <Button variant="primary" type="submit" className="mt-1">
-            Login
-          </Button>
-          <Link to="/forgotPassword" className="link">
-            Forgot your password?
-          </Link>
-        </div>
-      </Form>
+          {errors.password && touched ? <p>{errors.password}</p> : null}
+
+          <div className="login-btn">
+            <button type="submit" className="btn">
+              Login
+            </button>
+            <Link to="/forgotPassword" className="forgot">
+              Forgot your password?
+            </Link>
+          </div>
+        </form>
+      </div>
     </Container>
   );
 }

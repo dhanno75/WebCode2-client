@@ -47,10 +47,10 @@ function ResetPassword() {
 
   return (
     <Container style={{ maxWidth: "500px" }}>
-      <Form className="mt-5" onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Your password</Form.Label>
-          <Form.Control
+      <div className="log-form">
+        <h2>Reset Your Password!</h2>
+        <form onSubmit={handleSubmit}>
+          <input
             type="password"
             placeholder="Enter your new password"
             name="password"
@@ -60,12 +60,12 @@ function ResetPassword() {
             minLength={6}
           />
           {errors.password && touched ? <div>{errors.password}</div> : null}
-        </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Reset password
-        </Button>
-      </Form>
+          <button className="btn" type="submit">
+            Reset password
+          </button>
+        </form>
+      </div>
     </Container>
   );
 }

@@ -5,12 +5,24 @@ import { API } from "../../globals";
 // let API = "https://jsonplaceholder.typicode.com/users";
 // let API = "https://jsonplaceholder.typicode.com/users";
 
-export const getAllUsers = createAsyncThunk("users/getUsers", async () => {
+export const forgotPassword = createAsyncThunk("users/getUsers", async () => {
   return fetch(`${API}/users`).then((res) => res.json());
 });
 
-export const forgotPassword = createAsyncThunk("users/getUsers", async () => {
-  return fetch(`${API}/users`).then((res) => res.json());
+export const getAllUsers = createAsyncThunk("users/getAllUsers", async () => {
+  try {
+    const res = await fetch(`${API}/users`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    let users = await res.json();
+    return users;
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 export const login = createAsyncThunk(
@@ -27,7 +39,7 @@ export const login = createAsyncThunk(
       });
 
       let data = await response.json();
-      console.log(data);
+
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("isLoggedIn", true);
@@ -71,12 +83,14 @@ const UserSlice = createSlice({
     isFetching: false,
     isSuccess: false,
     isError: false,
+    loading: false,
   },
   reducers: {
     clearSomeState: (state) => {
       state.isError = false;
       state.isSuccess = false;
       state.isFetching = false;
+      state.loading = false;
     },
   },
   extraReducers: {
@@ -85,17 +99,15 @@ const UserSlice = createSlice({
     },
     [getAllUsers.fulfilled]: (state, action) => {
       state.loading = false;
-      state.users = [action.payload];
+      state.users = action.payload;
     },
     [getAllUsers.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
     },
     [login.pending]: (state) => {
       state.isFetching = true;
     },
     [login.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       state.email = payload.user.email;
       state.firstname = payload.user.firstname;
       state.role = payload.user.role;

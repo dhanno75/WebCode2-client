@@ -5,7 +5,7 @@ function ProtectedRoute({ children }) {
   if (token) {
     return <section>{children}</section>;
   } else {
-    return <Navigate replace to="/" />;
+    return <Navigate to="/" />;
   }
 }
 

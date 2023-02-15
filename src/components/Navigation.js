@@ -16,17 +16,17 @@ function Navigation() {
   const token = localStorage.getItem("token");
   const { role } = useSelector((state) => state.user);
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     navigate("/");
+  //   }
+  // }, []);
 
   return (
     <div>
       <Navbar bg="light" expand="lg">
         <Container fluid>
-          <Navbar.Brand href="#">Library</Navbar.Brand>
+          <Navbar.Brand href="/">CRM</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -35,9 +35,9 @@ function Navigation() {
               navbarScroll
             >
               {token && (role === "admin" || role === "manager") ? (
-                <Button onClick={() => navigate("/Signup")}>Signup</Button>
+                <Button onClick={() => navigate("/Signup")}>Create User</Button>
               ) : (
-                <Button onClick={() => navigate("/Login")}>Login</Button>
+                ""
               )}
 
               <Nav.Link href="#action2">Link</Nav.Link>

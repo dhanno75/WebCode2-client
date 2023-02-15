@@ -43,10 +43,12 @@ function ForgotPassword() {
 
   return (
     <Container style={{ maxWidth: "500px" }}>
-      <Form className="mt-5" onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
+      <div className="log-form">
+        <h2>
+          Enter email associated with your account to change your password
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <input
             type="email"
             placeholder="Enter email"
             name="email"
@@ -54,13 +56,13 @@ function ForgotPassword() {
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          {errors.email && touched ? <div>{errors.email}</div> : null}
-        </Form.Group>
+          {errors.email && touched ? <p>{errors.email}</p> : null}
 
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+          <button className="btn" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
     </Container>
   );
 }
