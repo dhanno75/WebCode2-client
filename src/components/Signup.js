@@ -16,7 +16,6 @@ const initialValues = {
 function Signup() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  console.log(token);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
