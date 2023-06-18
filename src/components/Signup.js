@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { API } from "../globals";
 import { signUpSchema } from "../schemas";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllManagers } from "../redux/features/UserSlice";
 
 const initialValues = {
   firstname: "",
@@ -11,21 +13,27 @@ const initialValues = {
   email: "",
   password: "",
   role: "",
+  manager: "",
 };
 
 function Signup() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.user.managers);
+
+  useEffect(() => {
+    dispatch(getAllManagers());
+  }, [dispatch]);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: signUpSchema,
-      onSubmit: (vals = { ...values, token }, action) => {
-        console.log(vals);
+      onSubmit: (values, action) => {
+        console.log(values);
         fetch(`${API}/users/signup`, {
           method: "POST",
-          body: JSON.stringify(vals),
+          body: JSON.stringify(values),
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -33,7 +41,6 @@ function Signup() {
           },
         })
           .then((data) => {
-            console.log(data);
             if (data.status === 400) {
               throw new Error(data.statusText);
             }
@@ -113,6 +120,25 @@ function Signup() {
             <option value="employee">employee</option>
           </select>
           {errors.role && touched.role ? <p>{errors.role}</p> : null}
+
+          <select
+            aria-label="Default select example"
+            name="manager"
+            value={values.manager}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            style={{ cursor: "pointer" }}
+          >
+            <option value="">Your manager</option>
+            {data
+              ? data.map((opts, i) => (
+                  <option value={opts.id} key={opts.id}>
+                    {opts.manager_name}
+                  </option>
+                ))
+              : ""}
+          </select>
+          {errors.manager && touched.manager ? <p>{errors.manager}</p> : null}
 
           <div className="login-btn">
             <button type="submit" className="btn">

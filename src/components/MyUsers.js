@@ -8,7 +8,7 @@ import axios from "axios";
 import { API } from "../globals";
 import { toast } from "react-toastify";
 
-function UserDetails() {
+function MyUsers() {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user.users);
 
@@ -133,4 +133,4 @@ function UserDetails() {
   );
 }
 
-export default UserDetails;
+export default MyUsers;

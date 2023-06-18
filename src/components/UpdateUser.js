@@ -39,7 +39,7 @@ function UpdateUser() {
   };
 
   return (
-    <Container style={{ maxWidth: "500px" }}>
+    <Container style={{ maxWidth: "500px", marginTop: "80px" }}>
       <div className="log-form">
         <h2>User Registration</h2>
         <form>

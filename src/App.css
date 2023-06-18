@@ -260,3 +260,69 @@ body {
   font-family: "Nunito", sans-serif;
   color: #5d5d5d;
 }
+
+.dashboard {
+  padding: 25px;
+  margin-top: 80px;
+}
+
+.d-header {
+  display: flex;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgb(55, 149, 243);
+}
+
+.d-heading {
+  flex: 1;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 35px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.d-leads {
+  text-align: end;
+  width: 15%;
+}
+
+.card-wrapper {
+  padding: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.cards {
+  width: 600px;
+  border-radius: 10px;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.card1 {
+  background-color: #ececec;
+  padding: 20px;
+}
+
+.card1 .card1-header {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: #564f4f;
+  margin-left: 30px;
+}
+
+.card2 {
+  flex: 1;
+  background-color: #ececec;
+  padding: 20px;
+}
+
+.card2 .card2-header {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: #564f4f;
+  margin-left: 30px;
+}

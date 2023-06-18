@@ -6,26 +6,38 @@ import Navigation from "./components/Navigation";
 import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 import UserDetails from "./components/UserDetails";
-// import { ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ResetPassword from "./components/ResetPassword";
 import Signup from "./components/Signup";
 import About from "./components/About";
-import React from "react";
+import React, { Suspense } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Leads from "./components/Leads";
 import UpdateUser from "./components/UpdateUser";
-import Dashboard from "./components/Dashboard";
 import MyLeads from "./components/MyLeads";
+import AddLead from "./components/AddLead";
+import UpdateLead from "./components/UpdateLead";
+
+const DashboardComponent = React.lazy(() => import("./components/Dashboard"));
 
 function App() {
   return (
     <div className="App">
       <Navigation />
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <Routes>
         <Route path="/about" element={<About />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route
+          path="/"
+          element={
+            <Suspense maxDuration={300}>
+              <DashboardComponent />
+            </Suspense>
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
@@ -35,6 +47,14 @@ function App() {
           element={
             <ProtectedRoute>
               <MyLeads />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addLead"
+          element={
+            <ProtectedRoute>
+              <AddLead />
             </ProtectedRoute>
           }
         />
@@ -59,6 +79,14 @@ function App() {
           element={
             <ProtectedRoute>
               <UpdateUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/updateLead/:id"
+          element={
+            <ProtectedRoute>
+              <UpdateLead />
             </ProtectedRoute>
           }
         />

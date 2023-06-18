@@ -3,13 +3,12 @@ import { Container } from "react-bootstrap";
 // import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import { useNavigate, Link } from "react-router-dom";
-// import { API } from "../globals";
 import { loginSchema } from "../schemas";
 import { useDispatch, useSelector } from "react-redux";
 import { login, clearSomeState } from "../redux/features/UserSlice";
 
 const initialValues = {
-  email: "admin@company.io",
+  email: "p-dhananjay@outlook.com",
   password: "test@1234",
 };
 
@@ -18,20 +17,14 @@ function Login() {
   const { isSuccess, isError } = useSelector((state) => ({ ...state.user }));
   const navigate = useNavigate();
 
-  const {
-    values,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    errors,
-    touched,
-  } = useFormik({
-    initialValues,
-    validationSchema: loginSchema,
-    onSubmit: (values) => {
-      dispatch(login(values));
-    },
-  });
+  const { values, handleBlur, handleChange, handleSubmit, errors, touched } =
+    useFormik({
+      initialValues,
+      validationSchema: loginSchema,
+      onSubmit: (values) => {
+        dispatch(login(values));
+      },
+    });
 
   useEffect(() => {
     return () => {
@@ -46,10 +39,10 @@ function Login() {
     }
     if (isSuccess) {
       // toast.success("Successful Login!");
+      navigate("/");
       dispatch(clearSomeState());
-      navigate("/userDetails");
     }
-  });
+  }, [isError, isSuccess, dispatch, navigate]);
 
   return (
     <Container style={{ maxWidth: "500px" }}>
@@ -93,25 +86,3 @@ function Login() {
 }
 
 export default Login;
-
-// fetch(`${API}/users/login`, {
-//   method: "POST",
-//   body: JSON.stringify(values),
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// })
-//   .then((data) => {
-//     if (data.status === 401) {
-//       throw new Error(data.statusText);
-//     }
-//     toast.success("Login successfull");
-//     return data.json();
-//   })
-//   .then((data) => {
-//     localStorage.setItem("token", data.token);
-//     navigate("/");
-//   })
-//   .catch((err) => {
-//     toast.error("Invalid login credentials");
-//   });

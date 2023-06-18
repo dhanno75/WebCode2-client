@@ -11,11 +11,6 @@ function Navigation() {
   const token = localStorage.getItem("token");
   // const isLoggedIn = localStorage.getItem("isLoggedIn");
   const role = localStorage.getItem("role");
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     navigate("/userDetails");
-  //   }
-  // }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -25,16 +20,31 @@ function Navigation() {
     localStorage.removeItem("email");
     localStorage.removeItem("userRole");
     localStorage.removeItem("role");
+    localStorage.removeItem("id");
+    localStorage.removeItem("serviceRequest");
+    localStorage.removeItem("status");
+    localStorage.removeItem("company");
+    localStorage.removeItem("leademail");
+    localStorage.removeItem("leadname");
 
     // toast.warn("Logged out successfully!");
-    navigate("/");
+    navigate("/login");
   };
 
   return (
     <div>
-      <Navbar bg="light" expand="lg">
+      <Navbar
+        style={{
+          backgroundColor: "#d2d2d2",
+          position: "fixed",
+          top: 0,
+          width: "100%",
+          height: "80px",
+        }}
+        expand="lg"
+      >
         <Container fluid style={{ padding: "0 20px" }}>
-          <Link to="/" className="navbar-brand logo-wrapper">
+          <Link to="/about" className="navbar-brand logo-wrapper">
             <img src={Logo} alt="crm logo" className="logo" />
           </Link>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -44,8 +54,8 @@ function Navigation() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
-              {token && role ? (
-                <Link to="/dashboard" className="nav-link crm-links">
+              {token ? (
+                <Link to="/" className="nav-link crm-links">
                   Dashboard
                 </Link>
               ) : (

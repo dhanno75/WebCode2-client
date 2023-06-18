@@ -21,6 +21,26 @@ export const getAllUsers = createAsyncThunk("users/getAllUsers", async () => {
   }
 });
 
+export const getAllManagers = createAsyncThunk(
+  "users/getAllManagers",
+  async () => {
+    try {
+      const res = await fetch(`${API}/users/manager`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          token: localStorage.getItem("token"),
+        },
+      });
+      let managers = await res.json();
+      return managers;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export const login = createAsyncThunk(
   "users/login",
   async (values, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
@@ -40,6 +60,7 @@ export const login = createAsyncThunk(
         localStorage.setItem("token", data.token);
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("role", data.user.role);
+        localStorage.setItem("id", data.user._id);
         return data;
       } else {
         rejectWithValue(data);
@@ -74,6 +95,7 @@ const UserSlice = createSlice({
   name: "users",
   initialState: {
     users: [],
+    managers: [],
     email: "",
     firstname: "",
     role: "",
@@ -99,6 +121,16 @@ const UserSlice = createSlice({
       state.users = action.payload;
     },
     [getAllUsers.rejected]: (state, action) => {
+      state.loading = false;
+    },
+    [getAllManagers.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getAllManagers.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.managers = action.payload;
+    },
+    [getAllManagers.rejected]: (state, action) => {
       state.loading = false;
     },
     [login.pending]: (state) => {

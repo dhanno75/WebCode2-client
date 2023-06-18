@@ -13,42 +13,36 @@ const initialValue = {
 function ForgotPassword() {
   const navigate = useNavigate();
 
-  const {
-    values,
-    handleChange,
-    handleBlur,
-    touched,
-    handleSubmit,
-    errors,
-  } = useFormik({
-    initialValues: initialValue,
-    validationSchema: forgotPasswordEmailSchema,
-    onSubmit: (values) => {
-      fetch(`${API}/users/forgotPassword`, {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((data) => {
-          if (data.status === 404) {
-            throw new Error(data.statusText);
-          }
-          navigate("/login");
-          // toast.success(
-          //   "Reset password link sent to your email successfully!"
-          // );
-          return data.json();
+  const { values, handleChange, handleBlur, touched, handleSubmit, errors } =
+    useFormik({
+      initialValues: initialValue,
+      validationSchema: forgotPasswordEmailSchema,
+      onSubmit: (values) => {
+        fetch(`${API}/users/forgotPassword`, {
+          method: "POST",
+          body: JSON.stringify(values),
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .catch((err) => {
-          // toast.warn("There is no user created with this email ID.");
-        });
-    },
-  });
+          .then((data) => {
+            if (data.status === 404) {
+              throw new Error(data.statusText);
+            }
+            navigate("/login");
+            // toast.success(
+            //   "Reset password link sent to your email successfully!"
+            // );
+            return data.json();
+          })
+          .catch((err) => {
+            // toast.warn("There is no user created with this email ID.");
+          });
+      },
+    });
 
   return (
-    <Container style={{ maxWidth: "500px" }}>
+    <Container style={{ maxWidth: "500px", marginTop: "80px" }}>
       <div className="log-form">
         <h2>
           Enter email associated with your account to change your password
