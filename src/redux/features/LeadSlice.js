@@ -47,6 +47,7 @@ export const getUserLeads = createAsyncThunk(
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          token: localStorage.getItem("token"),
         },
       });
       const leads = await response.json();
