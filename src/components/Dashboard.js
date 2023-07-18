@@ -72,10 +72,10 @@ const Dashboard = () => {
       : "";
 
     data01 = [
-      { name: "created", value: created.length, fill: "#ef4444" },
+      { name: "created", value: created.length, fill: "#3b82f6" },
       { name: "released", value: released.length, fill: "#469990" },
       { name: "open", value: open.length, fill: "#eab308" },
-      { name: "canceled", value: canceled.length, fill: "#3b82f6" },
+      { name: "canceled", value: canceled.length, fill: "#ef4444" },
       { name: "in process", value: inprocess.length, fill: "#22c55e" },
       { name: "completed", value: completed.length, fill: "#a855f7" },
     ];

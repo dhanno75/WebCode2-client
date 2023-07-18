@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API } from "../globals";
 import { toast } from "react-toastify";
+import MoonLoader from "react-spinners/MoonLoader";
 
 function MyUsers() {
   const dispatch = useDispatch();
@@ -51,23 +52,6 @@ function MyUsers() {
         <div className="user-email user-details">Email</div>
         <div className="user-role">Role</div>
         {role === "admin" ? <div className="extra"></div> : ""}
-        {/* {role === "admin" ? (
-                <div className="user-functions">
-                  <div className="delete">
-                    <AiOutlineClose style={{ color: "rgb(194, 93, 5)" }} />
-                  </div>
-                  <div className="edit">
-                    <Link to={`/updateUser/${user._id}`}>
-                      <AiFillEdit
-                        style={{ color: "rgb(31, 153, 218)" }}
-                        onClick={() => setData(user)}
-                      />
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )} */}
       </div>
 
       {users ? (
@@ -127,7 +111,14 @@ function MyUsers() {
           );
         })
       ) : (
-        <div className="spinner-border" role="status"></div>
+        <MoonLoader
+          color="#3859fe"
+          cssOverride={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+          }}
+        />
       )}
     </Container>
   );

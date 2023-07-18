@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API } from "../globals";
 import { toast } from "react-toastify";
+import MoonLoader from "react-spinners/MoonLoader";
 
 function Leads() {
   const dispatch = useDispatch();
@@ -43,7 +44,11 @@ function Leads() {
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <h2 className="mb-4">All Leads</h2>
-        <Link to="/addLead">Add Lead</Link>
+        <div className="addlead-button">
+          <Link to="/addLead" className="addlead">
+            Add Lead &rarr;
+          </Link>
+        </div>
       </div>
 
       <div className="user-card lead-header">
@@ -84,7 +89,14 @@ function Leads() {
           );
         })
       ) : (
-        <div className="spinner-border" role="status"></div>
+        <MoonLoader
+          color="#3859fe"
+          cssOverride={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+          }}
+        />
       )}
     </div>
   );

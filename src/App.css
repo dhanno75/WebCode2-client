@@ -28,6 +28,7 @@ body {
   transform: translate(-50%, -50%);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
 }
+
 @media (max-width: 40em) {
   .log-form {
     width: 95%;
@@ -41,11 +42,13 @@ body {
     transform: translate(0%, 0%);
   }
 }
+
 .log-form form {
   display: block;
   width: 100%;
   padding: 2em;
 }
+
 .log-form h2 {
   color: #5d5d5d;
   font-family: Nunito, "open sans condensed";
@@ -60,6 +63,7 @@ body {
   margin: 0;
   font-weight: 600;
 }
+
 .log-form input,
 .log-form select {
   display: block;
@@ -72,6 +76,7 @@ body {
   padding-bottom: 1.25em;
   color: #757575;
 }
+
 .log-form input:focus,
 .log-form select:focus {
   outline: none;
@@ -86,6 +91,7 @@ body {
   margin-right: 0.5em;
   box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.2);
 }
+
 .log-form .btn:hover {
   background: #23cad5;
 }
@@ -93,9 +99,11 @@ body {
   background: #1fb5bf;
   box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.1);
 }
+
 .log-form .btn:focus {
   outline: none;
 }
+
 .log-form .forgot {
   color: #33d3de;
   line-height: 0.5em;
@@ -107,6 +115,7 @@ body {
   padding: 0;
   float: right;
 }
+
 .log-form .forgot:hover {
   color: #1ba0a9;
 }
@@ -225,7 +234,7 @@ body {
 
 .lead-header .lead-details {
   background-color: #414141;
-  font-family: Nunito, "sans-serif";
+  font-family: "IBM Plex Sans", sans-serif;
   color: #fff;
 }
 
@@ -283,7 +292,12 @@ body {
 
 .d-leads {
   text-align: end;
+  align-self: center;
   width: 15%;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: #414141;
 }
 
 .card-wrapper {
@@ -325,4 +339,28 @@ body {
   font-weight: 600;
   color: #564f4f;
   margin-left: 30px;
+}
+
+.addlead-button {
+  align-self: flex-start;
+  margin-top: 5px;
+}
+
+.addlead {
+  text-decoration: none;
+  display: block;
+  color: #427bf8;
+  font-size: 16px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 500;
+  border-bottom: 1px solid #427bf8;
+  padding: 5px 3px;
+  transition: all 0.3s;
+}
+
+.addlead:hover {
+  background-color: #427bf8;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }

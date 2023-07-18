@@ -44,7 +44,7 @@ function Navigation() {
         expand="lg"
       >
         <Container fluid style={{ padding: "0 20px" }}>
-          <Link to="/about" className="navbar-brand logo-wrapper">
+          <Link to="/" className="navbar-brand logo-wrapper">
             <img src={Logo} alt="crm logo" className="logo" />
           </Link>
           <Navbar.Toggle aria-controls="navbarScroll" />
@@ -55,7 +55,7 @@ function Navigation() {
               navbarScroll
             >
               {token ? (
-                <Link to="/" className="nav-link crm-links">
+                <Link to="/dashboard" className="nav-link crm-links">
                   Dashboard
                 </Link>
               ) : (
@@ -67,7 +67,7 @@ function Navigation() {
                   All Users
                 </Link>
               ) : (
-                <Link to="/about" className="nav-link crm-links">
+                <Link to="/" className="nav-link crm-links">
                   About
                 </Link>
               )}

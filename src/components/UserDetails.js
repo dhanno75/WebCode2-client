@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API } from "../globals";
 import { toast } from "react-toastify";
+import MoonLoader from "react-spinners/MoonLoader";
 
 function UserDetails() {
   const dispatch = useDispatch();
@@ -41,7 +42,9 @@ function UserDetails() {
   const colors = ["rgb(186,255,201)", "rgb(255,179,186)", "rgb(186,255,255)"];
 
   return (
-    <Container style={{ marginTop: "100px", minHeight: "100vh" }}>
+    <Container
+      style={{ marginTop: "100px", minHeight: "100vh", height: "100vh" }}
+    >
       <h2 className="mb-5">All User Details</h2>
 
       <div className="user-card user-card-header">
@@ -51,23 +54,6 @@ function UserDetails() {
         <div className="user-email user-details">Email</div>
         <div className="user-role">Role</div>
         {role === "admin" ? <div className="extra"></div> : ""}
-        {/* {role === "admin" ? (
-                <div className="user-functions">
-                  <div className="delete">
-                    <AiOutlineClose style={{ color: "rgb(194, 93, 5)" }} />
-                  </div>
-                  <div className="edit">
-                    <Link to={`/updateUser/${user._id}`}>
-                      <AiFillEdit
-                        style={{ color: "rgb(31, 153, 218)" }}
-                        onClick={() => setData(user)}
-                      />
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                ""
-              )} */}
       </div>
 
       {users ? (
@@ -127,7 +113,14 @@ function UserDetails() {
           );
         })
       ) : (
-        <div className="spinner-border" role="status"></div>
+        <MoonLoader
+          color="#3859fe"
+          cssOverride={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+          }}
+        />
       )}
     </Container>
   );
