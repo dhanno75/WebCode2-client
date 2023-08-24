@@ -39,8 +39,8 @@ function Login() {
     }
     if (isSuccess) {
       // toast.success("Successful Login!");
-      navigate("/dashboard");
       dispatch(clearSomeState());
+      navigate("/dashboard");
     }
   }, [isError, isSuccess, dispatch, navigate]);
 

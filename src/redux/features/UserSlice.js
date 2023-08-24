@@ -107,7 +107,7 @@ const UserSlice = createSlice({
   reducers: {
     clearSomeState: (state) => {
       state.isError = false;
-      // state.isSuccess = false;
+      state.isSuccess = false;
       state.isFetching = false;
       state.loading = false;
     },

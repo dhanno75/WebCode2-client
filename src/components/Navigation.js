@@ -27,7 +27,6 @@ function Navigation() {
     localStorage.removeItem("leademail");
     localStorage.removeItem("leadname");
 
-    // toast.warn("Logged out successfully!");
     navigate("/login");
   };
 
@@ -54,6 +53,10 @@ function Navigation() {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
+              <Link to="/" className="nav-link crm-links">
+                About
+              </Link>
+
               {token ? (
                 <Link to="/dashboard" className="nav-link crm-links">
                   Dashboard
@@ -67,9 +70,7 @@ function Navigation() {
                   All Users
                 </Link>
               ) : (
-                <Link to="/" className="nav-link crm-links">
-                  About
-                </Link>
+                <></>
               )}
 
               {token && (role === "admin" || role === "manager") ? (
@@ -94,6 +95,7 @@ function Navigation() {
                 ""
               )}
               {token && role ? (
+                // <Link to='/login'></Link>
                 <FaPowerOff onClick={handleLogout} className="logout" />
               ) : (
                 <div style={{ fontSize: "21px" }}>

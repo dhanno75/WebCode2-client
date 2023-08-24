@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
-import Login from "./components/Login";
+// import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
 // import UserDetails from "./components/UserDetails";
 import { ToastContainer } from "react-toastify";
@@ -10,18 +10,18 @@ import "react-toastify/dist/ReactToastify.css";
 import ResetPassword from "./components/ResetPassword";
 import Signup from "./components/Signup";
 import About from "./components/About";
-import React, { Suspense } from "react";
+import React, { Suspense, lazy } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Leads from "./components/Leads";
 import UpdateUser from "./components/UpdateUser";
 import MyLeads from "./components/MyLeads";
 import AddLead from "./components/AddLead";
 import UpdateLead from "./components/UpdateLead";
+import BounceLoader from "react-spinners/BounceLoader";
 
-const DashboardComponent = React.lazy(() => import("./components/Dashboard"));
-const UserDetailsComponent = React.lazy(() =>
-  import("./components/UserDetails")
-);
+const DashboardComponent = lazy(() => import("./components/Dashboard"));
+const UserDetailsComponent = lazy(() => import("./components/UserDetails"));
+const LoginComponent = lazy(() => import("./components/Login"));
 
 function App() {
   return (
@@ -35,14 +35,24 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Suspense maxDuration={300}>
+              <Suspense
+                maxDuration={300}
+                fallback={<BounceLoader color="#36d7b7" />}
+              >
                 <DashboardComponent />
               </Suspense>
             </ProtectedRoute>
           }
         />
 
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <Suspense>
+              <LoginComponent />
+            </Suspense>
+          }
+        />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/resetPassword/:token" element={<ResetPassword />} />

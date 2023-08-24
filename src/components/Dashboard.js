@@ -130,40 +130,29 @@ const Dashboard = () => {
           </div>
           <div className="card2 cards">
             <div className="card2-header">Leads created by month</div>
-            {leadsPerMonth.data ? (
-              <AreaChart
-                width={800}
-                height={500}
-                data={leadCreationDates}
-                margin={{
-                  top: 50,
-                  right: 20,
-                  left: 20,
-                  bottom: 0,
-                }}
-              >
-                <Area
-                  type="monotone"
-                  dataKey="leadsPerMonth"
-                  stroke="#096914"
-                  fill="#a6d884"
-                />
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-              </AreaChart>
-            ) : (
-              <BeatLoader
-                color="#9137f8"
-                cssOverride={{
-                  position: "fixed",
-                  transform: "translate(-50%, -50%)",
-                  top: "50%",
-                  left: "22%",
-                }}
+
+            <AreaChart
+              width={800}
+              height={500}
+              data={leadCreationDates}
+              margin={{
+                top: 50,
+                right: 20,
+                left: 20,
+                bottom: 0,
+              }}
+            >
+              <Area
+                type="monotone"
+                dataKey="leadsPerMonth"
+                stroke="#096914"
+                fill="#a6d884"
               />
-            )}
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+            </AreaChart>
           </div>
         </div>
       </div>
